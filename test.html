@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test sahifasi</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    hr {
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container" id="testContainer">
+    <h2>Test savollari</h2>
+    <div id="questions"></div>
+  </div>
+
+  <script>
+    // localStorage dan testlarni olish
+    const testData = JSON.parse(localStorage.getItem('selectedTests')) || [];
+
+    const questionsContainer = document.getElementById('questions');
+
+    if (testData.length === 0) {
+      questionsContainer.innerHTML = "<p>Hech qanday test topilmadi.</p>";
+    } else {
+      testData.forEach((test, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+
+        questionDiv.innerHTML = `
+          <p><strong>${index + 1}. ${test.question}</strong></p>
+          <label><input type="radio" name="q${index}" value="${test.options[0]}"> ${test.options[0]}</label><br>
+          <label><input type="radio" name="q${index}" value="${test.options[1]}"> ${test.options[1]}</label><br>
+          <label><input type="radio" name="q${index}" value="${test.options[2]}"> ${test.options[2]}</label><br>
+          <label><input type="radio" name="q${index}" value="${test.options[3]}"> ${test.options[3]}</label>
+          <hr>
+        `;
+
+        questionsContainer.appendChild(questionDiv);
+      });
+    }
+  </script>
+</body>
+</html>
